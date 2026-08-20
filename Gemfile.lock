@@ -394,6 +394,7 @@ DEPENDENCIES
   bundler-audit
   capybara
   debug
+  dotenv (~> 3.2)
   image_processing (~> 1.2)
   importmap-rails
   jbuilder
