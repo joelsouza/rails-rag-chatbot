@@ -66,3 +66,7 @@ group :test do
 end
 
 gem "dotenv", "~> 3.2"
+
+gem "pgvector", "~> 0.3.3"
+
+gem "neighbor", "~> 1.2"
