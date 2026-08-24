@@ -5,14 +5,14 @@
 <main class="container">
   <article>
     <h2>Add a document</h2>
-    <p>Upload a text document to add it to the knowledge base.</p>
+    <p>Paste a document's text to add it to the knowledge base. The text is split into chunks and indexed for search.</p>
 
-    <%= form_with url: ingest_path, method: :post, multipart: true do |form| %>
-      <label for="ingest_file">Document file</label>
-      <%= form.file_field :file, id: "ingest_file", accept: ".txt,.md,.markdown", required: true, aria: { describedby: "ingest_file_help" } %>
-      <small id="ingest_file_help">Accepted formats: .txt, .md, and .markdown.</small>
+    <%= form_with url: ingest_path, method: :post do |form| %>
+      <label for="ingest_text">Document text</label>
+      <%= form.text_area :text, id: "ingest_text", rows: 10, required: true, aria: { describedby: "ingest_text_help" } %>
+      <small id="ingest_text_help">The text is split into chunks and indexed for search.</small>
 
-      <%= form.submit "Upload document", class: "contrast" %>
+      <%= form.submit "Add document", class: "contrast" %>
     <% end %>
   </article>
 </main>
