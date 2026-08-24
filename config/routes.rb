@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "pages#index"
 
+  get "chat" => "chat#index"
   post "chat" => "chat#create"
   post "ingest" => "ingest#create"
 end

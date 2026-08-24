@@ -1,0 +1,18 @@
+<header class="container">
+  <h1>Ask the knowledge base</h1>
+  <p>Ask a question and the assistant will search the documents you have indexed to find an answer.</p>
+</header>
+
+<main class="container">
+  <article>
+    <h2>Your question</h2>
+
+    <%= form_with url: chat_path, method: :post do |form| %>
+      <label for="question">Question</label>
+      <%= form.text_area :question, id: "question", rows: 4, required: true, aria: { describedby: "question_help" } %>
+      <small id="question_help">Ask anything about the knowledge base. The answer appears at the top of the page.</small>
+
+      <%= form.submit "Ask", class: "contrast" %>
+    <% end %>
+  </article>
+</main>

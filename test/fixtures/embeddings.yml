@@ -1,0 +1,9 @@
+one:
+  document: one
+  content: "First chunk"
+  embedding: <%= Array.new(3072, 0.1).to_s %>
+
+two:
+  document: two
+  content: "Second chunk"
+  embedding: <%= Array.new(3072, 0.1).to_s %>
