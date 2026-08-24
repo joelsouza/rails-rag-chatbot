@@ -5,10 +5,10 @@ require "uri"
 class GeminiEmbeddingService
   class Error < StandardError; end
 
-  MODEL = "models/gemini-embedding-001"
+  MODEL = "models/gemini-embedding-2"
   DIMENSIONS = 3_072
   ENDPOINT = URI(
-    "https://generativelanguage.googleapis.com/v1/#{MODEL}:embedContent"
+    "https://generativelanguage.googleapis.com/v1beta/#{MODEL}:embedContent"
   )
 
   def initialize(api_key: ENV.fetch("GEMINI_API_KEY"))
