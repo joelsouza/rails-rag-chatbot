@@ -5,7 +5,7 @@ require "uri"
 class GroqAnswerService
   class Error < StandardError; end
 
-  MODEL = "llama-3.1-8b-instant"
+  MODEL = "openai/gpt-oss-20b"
   ENDPOINT = URI("https://api.groq.com/openai/v1/chat/completions")
 
   SYSTEM_PROMPT = <<~PROMPT.freeze
