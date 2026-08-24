@@ -6,15 +6,17 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "index renders the document upload form" do
+  test "index renders the document text form" do
     get pages_index_url
     assert_response :success
 
     assert_select "h1", text: "RAG Chatbot"
     assert_select "main.container article"
-    assert_select "form[action='/ingest'][method='post'][enctype='multipart/form-data']"
-    assert_select "label[for='ingest_file']", text: "Document file"
-    assert_select "input[type='file'][name='file'][required]"
-    assert_select "small#ingest_file_help", text: "Accepted formats: .txt, .md, and .markdown."
+    assert_select "form[action='/ingest'][method='post']"
+    assert_select "form[enctype='multipart/form-data']", count: 0
+    assert_select "label[for='ingest_text']", text: "Document text"
+    assert_select "textarea[name='text'][required]"
+    assert_select "input[type='file']", count: 0
+    assert_select "small#ingest_text_help", text: "The text is split into chunks and indexed for search."
   end
 end
