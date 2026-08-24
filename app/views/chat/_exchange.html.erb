@@ -1,0 +1,20 @@
+<% if question.present? %>
+  <article class="message message-question">
+    <p class="message__label">You</p>
+    <p class="message__body"><%= question %></p>
+  </article>
+<% end %>
+
+<% if answer.present? %>
+  <article class="message message-answer">
+    <p class="message__label">Assistant</p>
+    <div class="message__body"><%= simple_format(answer) %></div>
+  </article>
+<% end %>
+
+<% if error.present? %>
+  <article class="message message-answer message-error">
+    <p class="message__label">Assistant</p>
+    <p class="message__body"><%= error %></p>
+  </article>
+<% end %>

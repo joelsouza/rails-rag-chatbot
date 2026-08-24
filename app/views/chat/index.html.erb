@@ -3,16 +3,39 @@
   <p>Ask a question and the assistant will search the documents you have indexed to find an answer.</p>
 </header>
 
-<main class="container">
-  <article>
-    <h2>Your question</h2>
-
-    <%= form_with url: chat_path, method: :post do |form| %>
-      <label for="question">Question</label>
-      <%= form.text_area :question, id: "question", rows: 4, required: true, aria: { describedby: "question_help" } %>
-      <small id="question_help">Ask anything about the knowledge base. The answer appears at the top of the page.</small>
-
-      <%= form.submit "Ask", class: "contrast" %>
+<main class="container chat-main"
+  x-data="{ loading: false, hasMessages: <%= (@question.present? || @answer.present? || @error.present?).to_json %> }"
+  @htmx:before:request="loading = true; hasMessages = true"
+  @htmx:finally:request="loading = false"
+  @htmx:error="loading = false"
+  @htmx:after:swap="$refs.question.value = ''; $nextTick(() => $el.querySelector('#chat-thread > :last-child')?.scrollIntoView({ block: 'nearest' }))">
+  <section id="chat-thread" class="chat-thread" aria-label="Conversation" aria-live="polite">
+    <% unless @question.present? || @answer.present? || @error.present? %>
+      <div class="chat-empty" x-show="!hasMessages">
+        <h2>Ready when you are</h2>
+        <p>Ask your first question below and the assistant will search the knowledge base for an answer.</p>
+      </div>
     <% end %>
-  </article>
+
+    <% if @question.present? || @answer.present? || @error.present? %>
+      <%= render "exchange", question: @question, answer: @answer, error: @error %>
+    <% end %>
+
+    <article class="message message-answer message-thinking" x-show="loading" x-cloak>
+      <p class="message__label">Assistant</p>
+      <p class="message__body">Searching the knowledge base…</p>
+    </article>
+  </section>
+
+  <section class="composer" aria-label="Ask a question">
+    <h2>Ask a question</h2>
+
+    <%= form_with url: chat_path, method: :post, class: "composer__form", data: { turbo: false }, html: { "hx-post": chat_path, "hx-target": "#chat-thread", "hx-swap": "beforeend" } do |form| %>
+      <label for="question">Your question</label>
+      <%= form.text_area :question, id: "question", rows: 3, required: true, placeholder: "e.g. What does the policy say about remote work?", aria: { describedby: "question_help" }, "x-ref": "question", ":disabled": "loading" %>
+      <small id="question_help">The assistant searches the knowledge base. The answer appears in the conversation above.</small>
+
+      <%= form.submit "Ask", class: "contrast", ":disabled" => "loading", "x-bind:value" => "loading ? 'Asking…' : 'Ask'" %>
+    <% end %>
+  </section>
 </main>
