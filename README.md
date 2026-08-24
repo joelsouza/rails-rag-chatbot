@@ -1,24 +1,34 @@
-# README
+# RAG Chatbot (POC)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Rails RAG proof of concept. Paste text, index it, ask questions.
 
-Things you may want to cover:
+## Stack
 
-* Ruby version
+- Rails 8, Postgres + pgvector, neighbor gem
+- Gemini embeddings (3072-dim)
+- Groq (Llama 3.1) answers
+- ActiveJob (async chunk embedding)
 
-* System dependencies
+## Setup
 
-* Configuration
+```sh
+cp .env.example .env   # add real API keys
+bin/rails db:create db:migrate
+bin/rails server
+```
 
-* Database creation
+## Flow
 
-* Database initialization
+1. **Ingest** — paste text at `/`. Stored as `Document`, split into chunks, each embedded async into `Embedding`.
+2. **Chat** — ask at `/chat`. Question embedded, top 5 chunks retrieved by cosine similarity, sent to Groq with context.
 
-* How to run the test suite
+## Tests
 
-* Services (job queues, cache servers, search engines, etc.)
+```sh
+bin/rails test
+```
 
-* Deployment instructions
+## Notes
 
-* ...
+- Chunk size 2000 chars, overlap 300.
+- Requires valid `GEMINI_API_KEY` and `GROQ_API_KEY`.
