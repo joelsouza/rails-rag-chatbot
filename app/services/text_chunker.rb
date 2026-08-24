@@ -1,6 +1,6 @@
 class TextChunker
-  DEFAULT_CHUNK_SIZE = 4_000
-  DEFAULT_OVERLAP = 400
+  DEFAULT_CHUNK_SIZE = 2_000
+  DEFAULT_OVERLAP = 300
 
   def self.call(text, chunk_size: DEFAULT_CHUNK_SIZE, overlap: DEFAULT_OVERLAP)
     new(text, chunk_size:, overlap:).call
