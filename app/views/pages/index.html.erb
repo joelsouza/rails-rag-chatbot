@@ -1,3 +1,18 @@
-<h1>Pages#index</h1>
-<p>Find me in app/views/pages/index.html.erb</p>
-<p><%= @result.inspect %></p>
+<header class="container">
+  <h1>RAG Chatbot</h1>
+</header>
+
+<main class="container">
+  <article>
+    <h2>Add a document</h2>
+    <p>Upload a text document to add it to the knowledge base.</p>
+
+    <%= form_with url: ingest_path, method: :post, multipart: true do |form| %>
+      <label for="ingest_file">Document file</label>
+      <%= form.file_field :file, id: "ingest_file", accept: ".txt,.md,.markdown", required: true, aria: { describedby: "ingest_file_help" } %>
+      <small id="ingest_file_help">Accepted formats: .txt, .md, and .markdown.</small>
+
+      <%= form.submit "Upload document", class: "contrast" %>
+    <% end %>
+  </article>
+</main>

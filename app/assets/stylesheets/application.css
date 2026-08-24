@@ -8,3 +8,9 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+/* Keep the upload submit button compact instead of Pico's full-width default. */
+article form input[type="submit"] {
+  width: auto;
+  padding-inline: 1.5rem;
+}
